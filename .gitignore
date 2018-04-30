@@ -1,0 +1,23 @@
+
+# Compiled Files
+
+*.o
+
+
+# gcov Files
+
+*.gcda
+*.gcno
+*.gcov
+
+
+# Executable Files
+
+playdom
+player
+
+
+# Output Files
+
+*.out
+
