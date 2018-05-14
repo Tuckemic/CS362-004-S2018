@@ -33,7 +33,59 @@ runtests: testDrawCard
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
-all: playdom player
+# all: playdom player
+
+
+# Rules for Assignment-4 Random Tests
+
+randomtestcard1: randomtestcard1.c dominion.o rngs.o interface.o
+	gcc -o randomtestcard1 -g  randomtestcard1.c dominion.o rngs.o interface.o $(CFLAGS)
+
+randomtestcard2: randomtestcard2.c dominion.o rngs.o interface.o
+	gcc -o randomtestcard2 -g  randomtestcard2.c dominion.o rngs.o interface.o $(CFLAGS)
+
+randomtestadventurer: randomtestadventurer.c dominion.o rngs.o interface.o
+	gcc -o randomtestadventurer -g  randomtestadventurer.c dominion.o rngs.o interface.o $(CFLAGS)
+
+
+# To run randomtestcard1 tests, type:  "make randomtestcard1.out" at the prompt.
+
+randomtestcard1.out: randomtestcard1.c dominion.o rngs.o interface.o
+	echo "" > randomtestcard1.out
+	echo "Results for running randomtestcard1.out tests:" >> randomtestcard1.out
+	
+	echo "" >> randomtestcard1.out
+	echo "randomtestcard1.c:" >> randomtestcard1.out
+	gcc -o randomtestcard1 -g  randomtestcard1.c dominion.o rngs.o interface.o $(CFLAGS)
+	randomtestcard1 >> randomtestcard1.out
+	gcov -b dominion.c >> randomtestcard1.out
+
+
+# To run randomtestcard2 tests, type:  "make randomtestcard2.out" at the prompt.
+
+randomtestcard2.out: randomtestcard2.c dominion.o rngs.o interface.o
+	echo "" > randomtestcard2.out
+	echo "Results for running randomtestcard2.out tests:" >> randomtestcard2.out
+	
+	echo "" >> randomtestcard2.out
+	echo "randomtestcard2.c:" >> randomtestcard2.out
+	gcc -o randomtestcard2 -g  randomtestcard2.c dominion.o rngs.o interface.o $(CFLAGS)
+	randomtestcard2 >> randomtestcard2.out
+	gcov -b dominion.c >> randomtestcard2.out
+
+
+# To run randomtestadventurer tests, type:  "make randomtestadventurer.out" at the prompt.
+
+randomtestadventurer.out: randomtestadventurer.c dominion.o rngs.o interface.o
+	echo "" > randomtestadventurer.out
+	echo "Results for running randomtestadventurer.out tests:" >> randomtestadventurer.out
+	
+	echo "" >> randomtestadventurer.out
+	echo "randomtestadventurer.c:" >> randomtestadventurer.out
+	gcc -o randomtestadventurer -g  randomtestadventurer.c dominion.o rngs.o interface.o $(CFLAGS)
+	randomtestadventurer >> randomtestadventurer.out
+	gcov -b dominion.c >> randomtestadventurer.out
+
 
 
 cardtest1: cardtest1.c dominion.o rngs.o
@@ -63,7 +115,7 @@ unittest4: unittest4.c dominion.o rngs.o
 
 # To run all unit and card tests, type:  "make unittestresults.out" at the prompt.
 
-default: unittestresults.out
+# default: unittestresults.out
 
 unittestresults.out: unittest1.c unittest2.c unittest3.c unittest4.c cardtest1.c cardtest2.c cardtest3.c cardtest4.c dominion.o rngs.o
 	echo "" > unittestresults.out
@@ -112,6 +164,6 @@ unittestresults.out: unittest1.c unittest2.c unittest3.c unittest4.c cardtest1.c
 	
 	
 clean:
-	rm -f  unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 playdom.exe playdom player player.exe *.o *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f  randomtestcard1 randomtestcard2 randomtestadventurer unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 playdom.exe playdom player player.exe *.o *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
 	
 	
