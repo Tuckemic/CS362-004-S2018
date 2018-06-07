@@ -1,6 +1,7 @@
 
 
 import junit.framework.TestCase;
+import java.util.Random;
 
 //You can use this as a skeleton for your 3 different test approach
 //It is an optional to use this file, you can generate your own test file(s) to test the target function!
@@ -20,6 +21,12 @@ public class UrlValidatorTest extends TestCase {
 	   // AssertionFailedError: http://go.a1a expected: <false> but was: <true>
 	   // assertEquals(url, expected, result);
 	   
+	   System.out.printf("URL: '%s', Expected: %b, Result: %b; ", url, expected, actual);
+	   
+	   if (expected == actual) System.out.println("TEST PASSED!");
+	   else System.out.println("TEST FAILED!");
+	   
+	   /*
 	   if (expected == actual)
 	   {
 		   System.out.println("PASS: " + url);
@@ -29,6 +36,7 @@ public class UrlValidatorTest extends TestCase {
 	   {
 		   System.out.println("FAILURE: " + url + "  expected: " + expected + "  actual: " + actual);
 	   }
+	   */
    }
    
 
@@ -130,10 +138,35 @@ public class UrlValidatorTest extends TestCase {
 			   "http://go.au",
 			   "http://255.255.255.255",
 			   "http://anything.anythingelse.any",		// #*#*# should this be expected false?
-			   "http://www.gogle.com"   
+			   "http://www.gogle.com",
+			   "http://www.google.com",
+			   "http://go.com",
+			   "http://0.0.0.0",
+			   "http://255.255.255.255",
+			   "http://255.com",
+			   "http://www.google.com:80",
+			   "http://www.google.com:65535",
+			   "http://www.google.com/firstPath",
+			   "http://www.google.com/$23h",
+			   "http://www.google.com/test1/file",
+			   "http://www.google.com?action=view",
+			   "http://www.google.com?action=edit&mode=up" 
 	   };
 	      
 	   boolean[] validInputExpecteds = {
+			   true,
+			   true,
+			   true,
+			   true,
+			   true,
+			   true,
+			   true,
+			   true,
+			   true,
+			   true,
+			   true,
+			   true,
+			   true,
 			   true,
 			   true,
 			   true,
@@ -148,7 +181,10 @@ public class UrlValidatorTest extends TestCase {
 			   "ftp://www.go!gle.com",
 			   "ftp://path/subpath/file",
 			   "ftp://ab.sol.ute.com",
-			   "https://www.google.com"
+			   "https://www.google.com",
+			   "file://",
+			   "ftp://www.google.com",
+			   "h3t://www.google.com"
 	   };
 	   
 	   boolean[] errorProneInputExpecteds = {
@@ -157,6 +193,9 @@ public class UrlValidatorTest extends TestCase {
 			   false,
 			   true,
 			   true, 
+			   true,
+			   true,
+			   true,
 			   true
 	   };
 	   
@@ -180,7 +219,17 @@ public class UrlValidatorTest extends TestCase {
 			   "http://go.a",
 			   "http://www.google.c",
 			   "http://www.go!gle.com",
-			   "http://www.g*ogle.com"
+			   "http://www.g*ogle.com",
+			   "http://www.googlecom",
+			   "http:/www.google.com",
+			   "http://256.256.256.256",
+			   "http://",
+			   "http://www.google.com:65636",
+			   "http://www.google.com:-1",
+			   "http://www.google.com/../",
+			   "http://www.google.com/..//file",
+			   "http://www.google.com!action=view",
+			   "http://",	   
 	   };
 	      
 	   boolean[] invalidInputExpecteds = {
@@ -202,7 +251,17 @@ public class UrlValidatorTest extends TestCase {
 			   false,
 			   false,
 			   false,
-			   false   
+			   false,
+			   false,
+			   false,
+			   false,
+			   false,
+			   false,
+			   false,
+			   false,
+			   false,
+			   false,
+			   false 
 	   };
    
 	   // {0, 5, 2, 9, 2}
@@ -254,25 +313,152 @@ public class UrlValidatorTest extends TestCase {
 	   // System.out.println();
 	   // System.out.println();
 	   
+	   
 	   System.out.println("Running error prone test group.");
 	   runTestGroup(urlVal, errorProneInputURLs, errorProneInputExpecteds);
 	   System.out.println();
 	   System.out.println();
 	   
+	   
 	   System.out.println("Running INVALID test group.");
 	   runTestGroup(urlVal, invalidInputURLs, invalidInputExpecteds);
 	   System.out.println();
-	   System.out.println();
+	   // System.out.println();
 	   
-
-	   
-	   
-       System.out.println();
+  
+       // System.out.println();
 	   System.out.println("testManualTest() ending.");
        System.out.println(".... .... ....");  
    }
    
+/*
+ //runs isValid() method and compares result to expected
+   public void manualHelper(String url, UrlValidator urlVal, boolean expected)
+   {
+	   // boolean result = urlVal.isValid(url);
+	   
+	   boolean result = false;
+	   
+	   try {
+	   		result = urlVal.isValid(url);
+	   	} 
+	   	catch (Exception except) {
+	   		System.out.println();
+	   		System.out.println("     Exception: " + except);
+	   	}
+	   	catch (Error error) {   
+	   		System.out.println();
+	   		System.out.println("     Error: " + error);
+	   	}
+	   
+	   System.out.printf("URL: '%s', Expected: %b, Result: %b; ", url, expected, result);
+	   
+	   if (expected == result) System.out.println("TEST PASSED!");
+	   else System.out.println("TEST FAILED!");
+   }
+*/   
    
+   //Test for the schemes
+   public void testYourFirstPartition()
+   {
+	 //You can use this function to implement your First Partition testing
+       
+	   System.out.println("\nInput Partitioning Test: URL Schemes");
+	   
+	   
+       //URL validator
+       UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+       
+       //Valid test cases
+       String[]  checkAccept = {"http://"};
+       
+       //Invalid test cases
+       String[] checkReject = {"http:/", "http::", ":://", ":/", "23://"};
+       
+       //Counter for test count and loop
+       int count = 0;
+       int i = 0;
+       
+       //Get the total length and internal length
+       int totalLength = checkAccept.length + checkReject.length;
+       int innerLen = 0;
+       int outerLen = 0;
+       
+       //Count for test passed and failed
+       int testPassed = 0;
+       int testFailed = 0;
+       
+       //Loop to check for test cases
+       for(i = 0; i < totalLength; i++){
+           
+           //Valid test cases
+           if (outerLen < checkAccept.length){
+               
+               //Check the url string
+               String[] stringURL = {"" + checkAccept[outerLen] + "www.oregonstate.edu"};
+           
+               
+               //Valid test should pass
+               if(urlVal.isValid(stringURL[0])){
+                   
+                   //For passed test cases
+                   testPassed = testPassed + 1;
+               }
+           
+               //If the test failed
+               else{
+                   
+                   //For failed test cases
+                   System.out.println("Test Failed for URL (Incorrect Reject) : " + stringURL[0]);
+                   testFailed = testFailed + 1;
+               }
+               
+                //Counter for accept test cases
+               	outerLen = outerLen + 1;
+            }
+           
+            //Invalid test cases
+            else{
+                
+                //Check the url string
+                String[] stringURL = {"" + checkReject[innerLen] + "www.oregonstate.edu"};
+                
+                //Invalid test should fail
+                if(urlVal.isValid(stringURL[0])){
+                    
+                    //For failed test
+                    System.out.println("Test Failed for URL (Incorrect Accept): " + stringURL[0]);
+                    testFailed = testFailed + 1;
+                }
+                
+                //If the test passed
+                else{
+                    
+                    //For test passed
+                    testPassed = testPassed + 1;
+                
+                }
+
+                //Counter for reject test cases
+                innerLen = innerLen + 1;
+           }
+           
+           //Counter for total tests
+           count = count + 1;
+       }
+       
+       //Print out for test results
+       System.out.println("Total Test: " + count);
+       System.out.println("Passed Test: " + testPassed);
+       System.out.println("Failed Test: " + testFailed);
+   }
+   
+      
+   
+   
+   
+   
+   /*
    public void testYourFirstPartition()
    {
 	   //You can use this function to implement your First Partition testing	   
@@ -292,5 +478,6 @@ public class UrlValidatorTest extends TestCase {
 	   //You can use this function for programming based testing
 
    }
-
+   */
+   
 }
