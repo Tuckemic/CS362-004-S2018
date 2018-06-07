@@ -130,8 +130,7 @@ public class UrlValidatorTest extends TestCase {
 			   "http://go.au",
 			   "http://255.255.255.255",
 			   "http://anything.anythingelse.any",		// #*#*# should this be expected false?
-			   "http://www.gogle.com",
-			   
+			   "http://www.gogle.com"   
 	   };
 	      
 	   boolean[] validInputExpecteds = {
@@ -147,14 +146,12 @@ public class UrlValidatorTest extends TestCase {
 			   "htt://www.google.com",
 			   "htt://www.google.com",
 			   "ftp://www.go!gle.com",
-			   "ftp://foo.b!r.com",			// #*#*# Delete
 			   "ftp://path/subpath/file",
 			   "ftp://ab.sol.ute.com",
 			   "https://www.google.com"
 	   };
 	   
 	   boolean[] errorProneInputExpecteds = {
-			   false,
 			   false,
 			   false,
 			   false,
@@ -183,14 +180,10 @@ public class UrlValidatorTest extends TestCase {
 			   "http://go.a",
 			   "http://www.google.c",
 			   "http://www.go!gle.com",
-			   "http://www.g*ogle.com",
-			   "http://foo.b!r.com",		// #*#*# Delete
-			   "http://www.g*g.com"  		// #*#*# Delete
+			   "http://www.g*ogle.com"
 	   };
 	      
 	   boolean[] invalidInputExpecteds = {
-			   false,
-			   false,
 			   false,
 			   false,
 			   false,
