@@ -1,4 +1,12 @@
 
+// UrlValidatorTest.java
+/*
+ * CS362
+ * Final Project: Part-B
+ * Team: Christa Wright - wrighch3, Jorge Guzman Nader - guzmannj, Michael Tucker - tuckemic
+ * Date: 6/11/2018
+ * Description: Testing of Apache Commons URLValidatorInCorrect
+ */
 
 import junit.framework.TestCase;
 import java.util.Random;
@@ -17,26 +25,17 @@ public class UrlValidatorTest extends TestCase {
 
    
    public void assertEqualMsg(String url, boolean expected, boolean actual)
-   {
-	   // AssertionFailedError: http://go.a1a expected: <false> but was: <true>
-	   // assertEquals(url, expected, result);
-	   
-	   System.out.printf("URL: '%s', Expected: %b, Result: %b; ", url, expected, actual);
-	   
-	   if (expected == actual) System.out.println("TEST PASSED!");
-	   else System.out.println("TEST FAILED!");
-	   
-	   /*
-	   if (expected == actual)
+   { 
+	   if (expected == actual) 
 	   {
-		   System.out.println("PASS: " + url);
+		   	System.out.printf("TEST PASSED! ");
+	   }
+	   else 
+	   {
+		   	System.out.printf("TEST FAILED! ");
 	   }
 	   
-	   else
-	   {
-		   System.out.println("FAILURE: " + url + "  expected: " + expected + "  actual: " + actual);
-	   }
-	   */
+	   System.out.printf("Expected: %b, Result: %b, URL: '%s'\n", expected, actual, url);
    }
    
 
@@ -44,40 +43,17 @@ public class UrlValidatorTest extends TestCase {
    {
 	   	boolean result = false;
 	   
-	   	// System.out.println("calling urlVal.isValid(url)");
-	   
 	   	try {
 	   		result = urlV.isValid(url);
-	   		// } catch (Throwable error) {
 	   	} 
 	   	catch (Exception except) {
 	   		System.out.println();
-	   		// System.out.println("     url: " + url);
 	   		System.out.println("     Exception: " + except);
 	   	}
 	   	catch (Error error) {
-	   		// System.out.println("Error: " + error.getMessage());
 	   		System.out.println();
-	   		// System.out.println("     url: " + url);
 	   		System.out.println("     Error: " + error);
-	   	}
-	   
-	   	// System.out.println("isValid() result: " + result);
-	   
-	   	/*
-	   	if (result == true) {
-			System.out.println("result is True. url:  " + url);
-	   	}
-	   	else if (result == false) {
-		   	System.out.println("result is False.");
-		   	System.out.println(url);
-	   	}
-	   	else {
-		   	System.out.println("ELSE: result is: ");
-		   	System.out.println(result);
-	   	}
-   		*/
-	   	
+	   	}	   	
 	   	return result;
    }
    
@@ -90,12 +66,7 @@ public class UrlValidatorTest extends TestCase {
 	   {
 		   actualResult = testIsValidManual(urlV, inputURLsArr[i]);
 		   
-		   // System.out.println();
 		   assertEqualMsg(inputURLsArr[i], inputExpectedsArr[i], actualResult);
-		   // System.out.println();
-		   
-		   // assertEquals(inputURLsArr[i], inputExpectedsArr[i], actualResult);
-		   // AssertionFailedError: http://go.a1a expected: <false> but was: <true>
 	   }
 	   
    }
@@ -107,15 +78,12 @@ public class UrlValidatorTest extends TestCase {
 	   
 	   // Call the valid method of URLValidator with different possible
 	   // valid/invalid inputs and see if you find a failure.
-	  
-	   
-	   // boolean actualResult = false;  // #*#*# moved to function above
 	   
 	   String[] defaultInputURLs = {
 			   "http://www.google.com",
 			   "http://go.au",
 			   "http://255.255.255.255",
-			   "http://anything.anythingelse.any",		// #*#*# should this be expected false?
+			   "http://anything.anythingelse.any",
 			   "http://www.gogle.com",
 			   "ftp://path/subpath/file",
 			   "ftp://ab.sol.ute.com",
@@ -126,7 +94,7 @@ public class UrlValidatorTest extends TestCase {
 			   true,
 			   true,
 			   true,
-			   true,
+			   false,
 			   true,
 			   true,
 			   true,
@@ -137,7 +105,6 @@ public class UrlValidatorTest extends TestCase {
 			   "http://www.google.com",
 			   "http://go.au",
 			   "http://255.255.255.255",
-			   "http://anything.anythingelse.any",		// #*#*# should this be expected false?
 			   "http://www.gogle.com",
 			   "http://www.google.com",
 			   "http://go.com",
@@ -154,7 +121,6 @@ public class UrlValidatorTest extends TestCase {
 	   };
 	      
 	   boolean[] validInputExpecteds = {
-			   true,
 			   true,
 			   true,
 			   true,
@@ -263,102 +229,37 @@ public class UrlValidatorTest extends TestCase {
 			   false,
 			   false 
 	   };
-   
-	   // {0, 5, 2, 9, 2}
-	   // http://256.256.256.256:0/test1//file
-	   // String url = "http://256.256.256.256:0/test1//file";		// Test passes. correct result is false.
-	   // boolean expected = false;
-	   
-	   // String url = "http://256.256.256.256:0/test1?action=view";		// This test passes. Correct result
-	   // boolean expected = false;										// is false. But it should have failed.
-	   																    // #*#*# something different happening
-	   																	// when a valid port is added	   
-		// {0, 5, 3, 0, 0}
-		// http://256.256.256.256/test1?action=view
-		// String url = "http://256.256.256.256/test1?action=view";		// #*#*# Test fails. Result is true
-		// boolean expected = false;										//       but expected false
-
-		// String url = "http:/www.google.com";		// #*#*# Test fails. Result is true
-		// boolean expected = false;				//       but expected false
-	  
-	   // ("go.a1a", false)
-	   // go.a1a  false
-	   // String url = "http://go.a1a";				// #*#*# Test fails. Result is true
-	   // boolean expected = false;					//       but expected false
-					   
-	   
-	   System.out.println(".... .... ....");
-	   System.out.println("testManualTest() starting.");
-	   System.out.println();
+    
+	   System.out.println("\nManual Tests starting.");
 	   
 	   UrlValidator urlDefVal = new UrlValidator();		// Using default constructor
 	   
-	   System.out.println("Running default test group.");
+	   System.out.println("Manual Tests: Running default scheme test group.");
 	   runTestGroup(urlDefVal, defaultInputURLs, defaultInputExpecteds);
 	   System.out.println();
 	   
-	   
-	   // UrlValidator urlVal = new UrlValidator(null, null, allowAllSchemes);
-	   // long allowAllSchemes;
+
 	   UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);	   
 	   
-	   System.out.println("Running valid test group.");
+	   System.out.println("Manual Tests: Running valid test group.");
 	   runTestGroup(urlVal, validInputURLs, validInputExpecteds);
 	   System.out.println();
 	   System.out.println();
+ 
 	   
-	   // boolean errProneResult;
-	   // errProneResult = testIsValidManual(urlVal, errorProneInputURLs[3]);
-	   // assertEqualMsg(errorProneInputURLs[3], errorProneInputExpecteds[3],  errProneResult);
-	   // System.out.println();
-	   // System.out.println();
-	   
-	   
-	   System.out.println("Running error prone test group.");
+	   System.out.println("Manual Tests: Running error prone test group.");
 	   runTestGroup(urlVal, errorProneInputURLs, errorProneInputExpecteds);
 	   System.out.println();
 	   System.out.println();
 	   
 	   
-	   System.out.println("Running INVALID test group.");
+	   System.out.println("Manual Tests: Running INVALID test group.");
 	   runTestGroup(urlVal, invalidInputURLs, invalidInputExpecteds);
 	   System.out.println();
-	   // System.out.println();
-	   
-  
-       // System.out.println();
-	   System.out.println("testManualTest() ending.");
-       System.out.println(".... .... ....");  
    }
    
-/*
- //runs isValid() method and compares result to expected
-   public void manualHelper(String url, UrlValidator urlVal, boolean expected)
-   {
-	   // boolean result = urlVal.isValid(url);
-	   
-	   boolean result = false;
-	   
-	   try {
-	   		result = urlVal.isValid(url);
-	   	} 
-	   	catch (Exception except) {
-	   		System.out.println();
-	   		System.out.println("     Exception: " + except);
-	   	}
-	   	catch (Error error) {   
-	   		System.out.println();
-	   		System.out.println("     Error: " + error);
-	   	}
-	   
-	   System.out.printf("URL: '%s', Expected: %b, Result: %b; ", url, expected, result);
-	   
-	   if (expected == result) System.out.println("TEST PASSED!");
-	   else System.out.println("TEST FAILED!");
-   }
-*/   
    
-   //Test for the schemes
+ //Test for the schemes
    public void testYourFirstPartition()
    {
 	 //You can use this function to implement your First Partition testing
@@ -453,9 +354,7 @@ public class UrlValidatorTest extends TestCase {
        System.out.println("Failed Test: " + testFailed);
    }
    
-      
-   
-   
+
    
    
    /*
